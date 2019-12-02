@@ -8,6 +8,7 @@ sys.path.append(BASE_DIR)
 from app.initDB import initDB
 from app.dbInfo import dbInfo
 
+
 # returns DB data
 def getDBdata():
 
@@ -31,8 +32,10 @@ def connect_to_DB():
 
 
 # insert wine data to database table
-def insert_wine(name:str, id:int):
+def insert_wine(name:str):
     try:
+        id = check_count('wine') + 1
+
         conn = connect_to_DB()
         curs = conn.cursor()
 
@@ -50,9 +53,12 @@ def insert_wine(name:str, id:int):
 
 
 # insert review data to database table
-def insert_rev(review_id, wine_id, review):
+def insert_rev(wine_id, review):
     conn = connect_to_DB()
     curs = conn.cursor()
+
+    review_id = check_count('rev') + 1
+
     try:
         sql = """INSERT INTO review(review_id, wine_id, review) 
             VALUES(%s, %s, %s)"""

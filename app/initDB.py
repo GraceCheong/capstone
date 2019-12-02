@@ -14,10 +14,10 @@ print(CONFIG_DIR)
 config = configparser.ConfigParser()
 config.read(CONFIG_DIR)
 
-dblist = list()
 
 def initDB():
 
+    dblist = list()
     client = boto3.client(
         'rds',
         aws_access_key_id=config['aws']['aws_access_key_id'],
@@ -37,7 +37,7 @@ def initDB():
                                        host=db['Endpoint']['Address'],
                                        user=db['MasterUsername'],
                                        port=db['Endpoint']['Port'],
-                                       pw=db['DBInstanceStatus'])
+                                       pw="khu-ce2015")
             dblist.append(dbinfo)
             print(dbinfo.name,":", dbinfo.user, "@" ,dbinfo.host, " working")
         print("you've got {} of DB working".format(count))

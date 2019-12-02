@@ -1,33 +1,37 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
+from flask import Flask, request
+from app import database
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{master username}:{db password}@{endpoint}/{db instance name}'
-db = SQLAlchemy(app)
 
+@app.route('/insert', methods=['POST'])
+def insert():
 
+    type = request.form.get("type", "")
+    try:
+        if(type == "wine"):
+            name = request.form.get("wine", "")
+            database.insert_wine(name)
+            resp = "inserted {}".format(name)
+        elif(type == "rev"):
+            wine = request.form.get("wine", "")
+            review_str = request.form.get("review", "")
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+            id = database.select_wine(wine)
+            database.insert_rev(wine_id=id, review=review_str)
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+            resp = "inserted {} : {}".format(wine, review_str)
+    except Exception as e :
+        print(e)
+        
+    return resp
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World'
-
-
-'''
-def main():
-    os.environ.setdefault('app.settings')
-
-'''
 
 
 if __name__ == "__main__":
     app.run()
+
+
+from flask import Flask
+
+app = Flask(__name__)
+
