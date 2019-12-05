@@ -2,9 +2,6 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-from app import database
-
-
 @app.route('/insert', methods=['POST'])
 def insert():
 
