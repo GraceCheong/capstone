@@ -1,6 +1,8 @@
 from flask import Flask, request
-from app import database
+
 app = Flask(__name__)
+
+from app import database
 
 
 @app.route('/insert', methods=['POST'])
@@ -29,9 +31,3 @@ def insert():
 
 if __name__ == "__main__":
     app.run()
-
-
-from flask import Flask
-
-app = Flask(__name__)
-
