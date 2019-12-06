@@ -1,14 +1,19 @@
-import boto3, configparser, os, sys
+import boto3
+import configparser
+import os
+import sys
 import dbInfo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 
 CONFIG_DIR = os.path.join(BASE_DIR, 'config.ini')
 
 print(CONFIG_DIR)
+
 config = configparser.ConfigParser()
+#config = configparser.ConfigParser()
 config.read(CONFIG_DIR)
 
 
