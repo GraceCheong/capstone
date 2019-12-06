@@ -1,7 +1,5 @@
-import boto3
-import configparser
-import os
-import sys
+import boto3, configparser, os, sys
+import dbInfo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,11 +26,9 @@ def initDB():
     try:
         dbs = client.describe_db_instances()
         count = 0
-
-
         for db in dbs['DBInstances']:
             count += 1
-            dbinfo = dbInfo().infoInit(name="capstonedb",
+            dbinfo = dbInfo.dbInfo().infoInit(name="capstonedb",
                                        host=db['Endpoint']['Address'],
                                        user=db['MasterUsername'],
                                        port=db['Endpoint']['Port'],

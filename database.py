@@ -1,6 +1,7 @@
 # DB 연결 및 관리 함수
 import sys, os
 import pymysql
+import initDB, dbInfo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,18 +13,18 @@ sys.path.append(BASE_DIR)
 def getDBdata():
 
     count:int = 0
-    dblist = initDB()
+    dblist = initDB.initDB()
     #print(dblist[0].name)
 
     for now in dblist :
         count += 1
         if (now.name == 'capstonedb') :
-            #print(now.name)
+            print(now.name)
             return now
 
 # return pymysql.connect
 def connect_to_DB():
-    hostdb: dbInfo = getDBdata()
+    hostdb: dbInfo.dbInfo = getDBdata()
     conn = pymysql.connect(host=hostdb.host, port=3306, user=hostdb.user, password=hostdb.pw, db='wine_db')
     # host = DB주소(localhost 또는 ip주소), user = DB id, password = DB password, db = DB명
 
@@ -45,11 +46,11 @@ def insert_wine(name:str):
         check_main()
 
         conn.close()
+        return True
+
     except Exception as e:
         print(e)
-
-    return
-
+        return False
 
 # insert review data to database table
 def insert_rev(wine_id, review):
