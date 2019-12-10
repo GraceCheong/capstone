@@ -14,7 +14,7 @@ def getDBdata():
 
     count:int = 0
     dblist = initDB.initDB()
-    #print(dblist[0].name)
+    print(dblist[0].name)
 
     for now in dblist :
         count += 1
@@ -33,6 +33,11 @@ def connect_to_DB():
 
 # insert wine data to database table
 def insert_wine(name:str):
+
+    if (select_wine(name) != 0):
+        print("existing item on db")
+        return False
+
     try:
         id = check_count('wine') + 1
 
@@ -80,6 +85,7 @@ def select_wine(wine:str):
 
     sql = "SELECT id FROM main WHERE wine_name = '{}'".format(wine)  # 실행 할 쿼리문 입력
     curs.execute(sql)  # 쿼리문 실행
+    id = 0
 
     result = curs.fetchall()
     for item in result:
@@ -93,6 +99,7 @@ def select_wine(wine:str):
 
 # search specific review of wine by id
 def select_rev(wine_id:int):
+    list = []
     conn = connect_to_DB()
     curs = conn.cursor()
 
@@ -101,11 +108,13 @@ def select_rev(wine_id:int):
 
     result = curs.fetchall()
     for item in result:
-        id = item[0]
-        print(id)
+        list.append(item)
+        print(item)
 
     conn.close()
-    return id
+    print(tuple(list))
+    return tuple(list)
+
 
 
 #

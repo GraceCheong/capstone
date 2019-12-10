@@ -13,7 +13,6 @@ CONFIG_DIR = os.path.join(BASE_DIR, 'config.ini')
 print(CONFIG_DIR)
 
 config = configparser.ConfigParser()
-#config = configparser.ConfigParser()
 config.read(CONFIG_DIR)
 
 
